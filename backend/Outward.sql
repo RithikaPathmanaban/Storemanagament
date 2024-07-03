@@ -1,0 +1,31 @@
+CREATE TABLE Outward(
+OutwardID INT PRIMARY KEY NOT NULL,
+Status VARCHAR(255) NULL,
+DispatchDateExpected DATE NULL,
+ActualDispatchDate DATE NULL,
+CustomerID INT NOT NULL,
+DispatchedByStaffID INT NOT NULL,
+TotalItems INT DEFAULT(0) NULL,
+ShippedQuantity INT DEFAULT(0) NULL,
+TotalOrderCost DECIMAL DEFAULT(0.00) NULL,
+TotalCost DECIMAL DEFAULT(0.00) NULL,
+TotalTax DECIMAL DEFAULT(0.00) NULL,
+TotalOrderTax DECIMAL DEFAULT(0.00) NULL,
+TotalDiscount DECIMAL DEFAULT(0.00) NULL,
+TotalOrderDiscount DECIMAL DEFAULT(0.00) NULL,
+DispatchNotes VARCHAR(255) NULL,
+ShippingMethod CHAR(10) DEFAULT('Own') NULL,
+ShippingCost DECIMAL DEFAULT(0.00) NULL,
+InvoiceNumber INT NULL,
+TotalOrderAmount AS ((([TotalOrderCost]+[TotalOrderTax])+[ShippingCost])-[TotalOrderDiscount]),
+TotalAmount AS ((([TotalCost]+[TotalTax])+[ShippingCost])-[TotalDiscount]),
+FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),
+);
+CREATE TABLE Customer(
+CustomerID INT PRIMARY KEY NOT NULL,
+CustomerName VARCHAR(255) NULL,
+ContactPerson VARCHAR(255) NULL,
+ContactPhone INT NULL,
+ContactEmail INT NULL,
+)
+drop table Outward
